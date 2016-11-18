@@ -2,15 +2,40 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-std::vector<int> numVector;
+#include <cmath>
+#include <iterator>
+#include <ctime>
+#include <array>
+
+
+std::vector<bool> sieveVector(int n) {
+    std::vector<bool> primeVector(n, true);
+    for(int i = 2; pow(i,2) <= n; ++i)
+    {
+        if(primeVector.at(i-1))
+        {
+            for(int j = i*2; j<n; j+=i)
+            {
+                primeVector.at(j-1) = false;
+            }
+        }
+    }
+}
 
 int main()
 {
-    for(int i = 1; i <1001; ++i)
+    std::srand(std::time(0));
+    std::vector<bool> myVector = sieveVector(1000);
+    for(int i = 0; i < myVector.size(); ++i)
     {
-        numVector.push_back(i);
+        if(myVector.at(i) && i != 0 && i != 999)
+            std::cout<< i+1 << " ";
     }
-    auto vec_it = numVector.begin();
-
+    std::array<int, 100> numArray;
+    auto array_it = numArray.begin();
+    for(int i = 0; i < 100; ++i)
+    {
+        *array_it = std::modulus<int>()(std::rand(), 1000);
+    }
     return 0;
 }
